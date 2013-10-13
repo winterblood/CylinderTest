@@ -6,3 +6,7 @@
 *.csproj
 *.unityproj
 *.sln
+
+# Stuff added from http://t-machine.org/index.php/2012/07/03/unity-git-source-control-a-basic-gitignore/
+*.pidb
+*.userprefs
