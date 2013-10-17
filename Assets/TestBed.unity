@@ -167,7 +167,7 @@ Transform:
   m_PrefabInternal: {fileID: 2080493154}
   m_GameObject: {fileID: 116056459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -996.085815, z: 0}
+  m_LocalPosition: {x: 0, y: -891.272827, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1953121211}
@@ -200,7 +200,7 @@ MonoBehaviour:
   canControl: 1
   useFixedUpdate: 1
   movement:
-    maxForwardSpeed: 12
+    maxForwardSpeed: 36
     maxSidewaysSpeed: 10
     maxBackwardsSpeed: 10
     slopeSpeedMultiplier:
@@ -349,8 +349,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 463248164}
   - 33: {fileID: 463248163}
-  - 136: {fileID: 463248162}
   - 23: {fileID: 463248161}
+  - 65: {fileID: 463248162}
   m_Layer: 0
   m_Name: Cap2
   m_TagString: Untagged
@@ -376,8 +376,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
---- !u!136 &463248162
-CapsuleCollider:
+--- !u!65 &463248162
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -385,10 +385,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.00000012, y: 2.00000095, z: 1.00000072}
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94070098e-08}
 --- !u!33 &463248163
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -547,8 +546,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 956521473}
   - 33: {fileID: 956521472}
-  - 136: {fileID: 956521471}
   - 23: {fileID: 956521470}
+  - 65: {fileID: 956521471}
   m_Layer: 0
   m_Name: Cap1
   m_TagString: Untagged
@@ -574,8 +573,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
---- !u!136 &956521471
-CapsuleCollider:
+--- !u!65 &956521471
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -583,10 +582,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.00000012, y: 2.00000095, z: 1.00000072}
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94070098e-08}
 --- !u!33 &956521472
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -908,7 +906,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -996.085815
+      value: -891.272827
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
       propertyPath: m_LocalPosition.z
@@ -936,7 +934,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
       propertyPath: movement.maxForwardSpeed
-      value: 12
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
       propertyPath: movement.maxSidewaysSpeed
