@@ -16,8 +16,8 @@ public class SunLine : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos.z += speed * Time.deltaTime;
 		
-		if (pos.z > 1700.0f)
-			pos.z = -1700.0f;
+		if (pos.z > 2000.0f)
+			pos.z = -2000.0f;
 
 		transform.position = pos;
 	

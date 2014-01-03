@@ -34,7 +34,7 @@ class CharacterMotorMovement {
 
 	// The gravity for the character
 	var gravity : float = 10.0;
-	var maxFallSpeed : float = 20.0;
+	var maxFallSpeed : float = 40.0;
 	
 	// For the next variables, @System.NonSerialized tells Unity to not serialize the variable or show it in the inspector view.
 	// Very handy for organization!
@@ -56,6 +56,9 @@ class CharacterMotorMovement {
 	
 	@System.NonSerialized
 	var lastHitPoint : Vector3 = Vector3(Mathf.Infinity, 0, 0);
+	
+	@System.NonSerialized
+	var localUp : Vector3 = Vector3.up;
 }
 
 var movement : CharacterMotorMovement = CharacterMotorMovement();
@@ -184,6 +187,12 @@ private function UpdateFunction () {
 	// We copy the actual velocity into a temporary variable that we can manipulate.
 	var velocity : Vector3 = movement.velocity;
 	
+	// CORIOLIS - cache local up vector towards axis
+	movement.localUp = tr.position;
+	movement.localUp.z = 0.0f;
+	movement.localUp *= -1.0f;
+	movement.localUp.Normalize();
+	
 	// Update velocity based on input
 	velocity = ApplyInputVelocityChange(velocity);
 	
@@ -217,9 +226,12 @@ private function UpdateFunction () {
 	
 	// Find out how much we need to push towards the ground to avoid loosing grouning
 	// when walking down a step or over a sharp change in slope.
-	var pushDownOffset : float = Mathf.Max(controller.stepOffset, Vector3(currentMovementOffset.x, 0, currentMovementOffset.z).magnitude);
+	var lateralOffset : Vector3 = currentMovementOffset;
+	var upOffset : float = Vector3.Dot(lateralOffset, movement.localUp);
+	lateralOffset -= movement.localUp * upOffset;
+	var pushDownOffset : float = Mathf.Max(controller.stepOffset, lateralOffset.magnitude);
 	if (grounded)
-		currentMovementOffset -= pushDownOffset * Vector3.up;
+		currentMovementOffset -= pushDownOffset * movement.localUp;
 	
 	// Reset variables that will be set by collision function
 	movingPlatform.hitPlatform = null;
@@ -241,9 +253,9 @@ private function UpdateFunction () {
 	
 	// Calculate the velocity based on the current and previous position.  
 	// This means our velocity will only be the amount the character actually moved as a result of collisions.
-	var oldHVelocity : Vector3 = new Vector3(velocity.x, 0, velocity.z);
+	var oldHVelocity : Vector3 = velocity;
 	movement.velocity = (tr.position - lastPosition) / Time.deltaTime;
-	var newHVelocity : Vector3 = new Vector3(movement.velocity.x, 0, movement.velocity.z);
+	var newHVelocity : Vector3 = movement.velocity;
 	
 	// The CharacterController can be moved in unwanted directions when colliding with things.
 	// We want to prevent this from influencing the recorded velocity.
@@ -254,7 +266,7 @@ private function UpdateFunction () {
 		var projectedNewVelocity : float = Vector3.Dot(newHVelocity, oldHVelocity) / oldHVelocity.sqrMagnitude;
 		movement.velocity = oldHVelocity * Mathf.Clamp01(projectedNewVelocity) + movement.velocity.y * Vector3.up;
 	}
-	
+	/*
 	if (movement.velocity.y < velocity.y - 0.001) {
 		if (movement.velocity.y < 0) {
 			// Something is forcing the CharacterController down faster than it should.
@@ -267,6 +279,7 @@ private function UpdateFunction () {
 			jumping.holdingJumpButton = false;
 		}
 	}
+	*/
 	
 	// We were grounded but just loosed grounding
 	if (grounded && !IsGroundedTest()) {
@@ -396,11 +409,13 @@ private function ApplyGravityAndJumping (velocity : Vector3) {
 	if (inputJump && jumping.lastButtonDownTime < 0 && canControl)
 		jumping.lastButtonDownTime = Time.time;
 	
+	velocity -= movement.localUp * movement.gravity * Time.deltaTime;
+	/*
 	if (grounded)
 		velocity.y = Mathf.Min(0, velocity.y) - movement.gravity * Time.deltaTime;
 	else {
 		velocity.y = movement.velocity.y - movement.gravity * Time.deltaTime;
-		
+	
 		// When jumping up we don't apply gravity for some time when the user is holding the jump button.
 		// This gives more control over jump height by pressing the button longer.
 		if (jumping.jumping && jumping.holdingJumpButton) {
@@ -415,7 +430,8 @@ private function ApplyGravityAndJumping (velocity : Vector3) {
 		// Make sure we don't fall any faster than maxFallSpeed. This gives our character a terminal velocity.
 		velocity.y = Mathf.Max (velocity.y, -movement.maxFallSpeed);
 	}
-		
+	*/
+			
 	if (grounded) {
 		// Jump only if the jump button was pressed down in the last 0.2 seconds.
 		// We use this check instead of checking if it's pressed down right now
@@ -436,8 +452,9 @@ private function ApplyGravityAndJumping (velocity : Vector3) {
 				jumping.jumpDir = Vector3.Slerp(Vector3.up, groundNormal, jumping.perpAmount);
 			
 			// Apply the jumping force to the velocity. Cancel any vertical velocity first.
-			velocity.y = 0;
-			velocity += jumping.jumpDir * CalculateJumpVerticalSpeed (jumping.baseHeight);
+			//velocity.y = 0;
+			//velocity += jumping.jumpDir * CalculateJumpVerticalSpeed (jumping.baseHeight);
+			velocity += movement.localUp * CalculateJumpVerticalSpeed (jumping.baseHeight);
 			
 			// Apply inertia from platform
 			if (movingPlatform.enabled &&

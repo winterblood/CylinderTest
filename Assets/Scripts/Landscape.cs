@@ -162,7 +162,7 @@ public class Landscape : MonoBehaviour
 				float taper = Mathf.Cos( vertex.z*Mathf.PI/cylinderLength );
 				float h = heightfield[y*(width+2)+x];
 				float r = -cylinderRadius + h;
-				r *= 0.5f + (0.5f * taper);
+				r *= 0.2f + (0.8f * taper);
 				
 				vertex.x = r*cosAngle;
 				vertex.y = r*sinAngle;
