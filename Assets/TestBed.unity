@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26df3f0b54324ff4d82e097fe04bd5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 1
+  showDebug: 0
   moveForceMultiplier: 100
 --- !u!23 &293111925
 Renderer:
