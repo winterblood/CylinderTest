@@ -61,7 +61,7 @@ public class CoriolisPhysics : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{	
-		if (doOrientUp && (!rigid || !rigid.IsSleeping()))
+		if (doOrientUp && m && (!rigid || !rigid.IsSleeping()))
 		{
 			Vector3 localUp;
 			/*
