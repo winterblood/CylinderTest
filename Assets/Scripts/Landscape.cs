@@ -10,8 +10,8 @@ public class Landscape : MonoBehaviour
 	public float cylinderRadius 	= 1050.0f;
 	public float cylinderLength 	= 3700.0f;
 	public Material terrainMtl;
-	public int treeCount	 		= 10;
-	public GameObject treePrefab;
+	public int treeCount	 		= 100;
+	public GameObject treePrefab1;
 	
 	// Internal vars
 	private Mesh emptyMesh;
@@ -234,12 +234,27 @@ public class Landscape : MonoBehaviour
 		
 		for (int i=0; i<treeCount; i++)
 		{
-			Vector2 pos;
-			pos.x = Random.Range( 0.0f, cylinderRadius*Mathf.PI );
-			pos.y = Random.Range( 0.0f, cylinderLength );
+			Vector2 flatpos;
+			flatpos.x = Random.Range( 0.0f, cylinderRadius*Mathf.PI );
+			flatpos.y = Random.Range( 0.0f, cylinderLength );
 			
-			float y = GetTerrainHeight( pos.x, pos.y );
-			Instantiate( treePrefab, new Vector3(pos.x, y, pos.y), Quaternion.identity );
+			float h = GetTerrainHeight( flatpos.x, flatpos.y );
+			
+			// Calc angle for this strip outside the inner loop as it's independent of heightfield
+			float angle = 2.0f*Mathf.PI*flatpos.x/(width-1.0f);
+			float cosAngle = Mathf.Cos( angle );
+			float sinAngle = Mathf.Sin( angle );
+			float r = -cylinderRadius + h;
+			Vector3 realpos;
+			realpos.z = flatpos.y - cylinderLength * 0.5f;
+			
+			float taper = Mathf.Cos( realpos.z*Mathf.PI/cylinderLength );
+			r *= 0.2f + (0.8f * taper);
+			
+			realpos.x = r*cosAngle;
+			realpos.y = r*sinAngle;
+			
+			Instantiate( treePrefab1, realpos, Quaternion.identity );
 		}		
 		
 		Debug.Log("Finished mesh generation.");

@@ -15,7 +15,6 @@ public class CoriolisCharMover : MonoBehaviour
 
 	private Rigidbody rigid;
 
-	// Use this for initialization
 	void Start () {
 		rigid = gameObject.GetComponent("Rigidbody") as Rigidbody;
 	}
@@ -29,6 +28,7 @@ public class CoriolisCharMover : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		/*
 		Transform m = gameObject.transform;
 		Vector3 towardsCoriolisAxis = -m.position;
 		towardsCoriolisAxis.z = 0.0f;
@@ -36,6 +36,7 @@ public class CoriolisCharMover : MonoBehaviour
 		
 		Quaternion rotation = Quaternion.LookRotation(m.forward, towardsCoriolisAxis);
 		m.rotation = rotation;
+		*/
 	}
 	
 	void OnGUI()

@@ -238,8 +238,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 293111919}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.96046448e-08, y: -21.8015137, z: -5.96046448e-08}
+  m_LocalRotation: {x: -0, y: 0, z: -.186387315, w: .982476354}
+  m_LocalPosition: {x: 89.1020966, y: -23.7285423, z: -5.96046448e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1388279050}
@@ -255,25 +255,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a2112af450a934596ecd1b32c431d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axes: 0
   viewpointCamera: {fileID: 1388279049}
-  sensitivityX: 15
-  sensitivityY: 15
+  sensitivityYaw: 15
+  sensitivityPitch: 15
   minimumX: -360
   maximumX: 360
-  minimumY: -80
-  maximumY: 80
+  minPitch: -60
+  maxPitch: 60
 --- !u!114 &293111922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 293111919}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad231733166542c4dbc49f9a7978217e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebug: 0
+  doPhysics: 1
+  doOrientUp: 1
 --- !u!114 &293111923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,6 +708,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad231733166542c4dbc49f9a7978217e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebug: 0
+  doPhysics: 0
+  doOrientUp: 1
 --- !u!1 &1388279045
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +787,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1388279045}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 293111920}

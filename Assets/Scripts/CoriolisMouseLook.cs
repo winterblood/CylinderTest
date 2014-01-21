@@ -6,33 +6,31 @@ using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("Camera-Control/Coriolis Mouse Look")]
-public class CoriolisMouseLook : MonoBehaviour {
-	
-	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-	public RotationAxes axes = RotationAxes.MouseXAndY;
+public class CoriolisMouseLook : MonoBehaviour
+{	
 	public Camera viewpointCamera;
 
-	public float sensitivityX = 15F;
-	public float sensitivityY = 15F;
+	public float sensitivityYaw = 15F;
+	public float sensitivityPitch = 15F;
 	
 	public float minimumX = -360F;
 	public float maximumX = 360F;
 	
-	public float minimumY = -60F;
-	public float maximumY = 60F;
+	public float minPitch = -80F;
+	public float maxPitch = 80F;
 	
-	float rotationY = 0F;
+	private float pitch = 0F;
 	
 	void Update ()
 	{
 		// transform refers to the player themselves
-		transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
+		transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityYaw, 0);
 		
 		// viewpointCamera.transform refers to the camera
-		rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-		rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-			
-		Vector3 euler = new Vector3(-rotationY, viewpointCamera.transform.localEulerAngles.y, 0);
+		pitch += Input.GetAxis("Mouse Y") * sensitivityPitch;
+		pitch = Mathf.Clamp (pitch, minPitch, maxPitch);
+		
+		Vector3 euler = new Vector3(-pitch, viewpointCamera.transform.localEulerAngles.y, 0);
 		viewpointCamera.transform.localEulerAngles = euler;
 	}
 	
