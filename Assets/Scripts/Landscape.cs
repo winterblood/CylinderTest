@@ -238,19 +238,15 @@ public class Landscape : MonoBehaviour
 			flatpos.x = Random.Range( 0.0f, cylinderRadius*Mathf.PI );
 			flatpos.y = Random.Range( 0.0f, cylinderLength );
 			
-			float h = GetTerrainHeight( flatpos.x, flatpos.y );
+			//float h = GetTerrainHeight( flatpos.x, flatpos.y );
 			
 			// Calc angle for this strip outside the inner loop as it's independent of heightfield
 			float angle = 2.0f*Mathf.PI*flatpos.x/(width-1.0f);
 			float cosAngle = Mathf.Cos( angle );
 			float sinAngle = Mathf.Sin( angle );
-			float r = -cylinderRadius + h;
+			float r = -100.0f; //-cylinderRadius + h;
 			Vector3 realpos;
-			realpos.z = flatpos.y - cylinderLength * 0.5f;
-			
-			float taper = Mathf.Cos( realpos.z*Mathf.PI/cylinderLength );
-			r *= 0.2f + (0.8f * taper);
-			
+			realpos.z = flatpos.y - cylinderLength * 0.5f;			
 			realpos.x = r*cosAngle;
 			realpos.y = r*sinAngle;
 			

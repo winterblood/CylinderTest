@@ -10,6 +10,7 @@ public class CoriolisPhysics : MonoBehaviour
 	public bool showDebug = false;	
 	public bool doPhysics = true;
 	public bool doOrientUp = false;
+	public bool doSnapToGround = false;
 	
 	private Rigidbody rigid;
 	private Vector3 totalForce = Vector3.zero;
@@ -29,6 +30,14 @@ public class CoriolisPhysics : MonoBehaviour
 		if (doPhysics)
 		{
 			rigid = gameObject.GetComponent("Rigidbody") as Rigidbody;
+		}
+		
+		Update();	// Orients transform if required
+		if (doSnapToGround)
+		{
+			RaycastHit info;
+			Physics.Raycast ( m.position, -m.up, out info );
+			m.position = info.point;
 		}
 	}
 	

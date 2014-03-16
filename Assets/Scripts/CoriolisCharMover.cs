@@ -5,6 +5,8 @@ public class CoriolisCharMover : MonoBehaviour
 {
 	public bool showDebug = false;
 	public float moveForceMultiplier = 10.0f;
+	public float cushionHeight = 2.0f;
+	public float cushionForce = 10.0f;
 
 	// The current global direction we want the character to move in.
 	private Vector3 inputMoveDirection = Vector3.zero;
@@ -28,8 +30,8 @@ public class CoriolisCharMover : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		Transform m = gameObject.transform;	
 		/*
-		Transform m = gameObject.transform;
 		Vector3 towardsCoriolisAxis = -m.position;
 		towardsCoriolisAxis.z = 0.0f;
 		towardsCoriolisAxis.Normalize();
@@ -37,6 +39,13 @@ public class CoriolisCharMover : MonoBehaviour
 		Quaternion rotation = Quaternion.LookRotation(m.forward, towardsCoriolisAxis);
 		m.rotation = rotation;
 		*/
+		
+		RaycastHit info;
+		Physics.Raycast ( m.position, -m.up, out info );
+		if (info.distance < cushionHeight)
+		{
+			rigid.AddForce( m.up * cushionForce * (cushionHeight-info.distance) );
+		}
 	}
 	
 	void OnGUI()
